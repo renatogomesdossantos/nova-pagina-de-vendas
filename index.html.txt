@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Método Renda Dominante | Transforme sua Vida Financeira</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#F59E0B',
+                            goldHover: '#D97706',
+                            green: '#10B981',
+                            greenGlow: '#059669',
+                            dark: '#0B0F17',
+                            card: '#131B2A',
+                            accent: '#2563EB',
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 25px rgba(16, 185, 129, 0.4)' },
+                            '50%': { boxShadow: '0 0 45px rgba(16, 185, 129, 0.8)' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-6px)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Custom Scrollbar & Utilities */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F17;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10B981;
+        }
+        .glow-text-green {
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        .glow-text-gold {
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-100 font-sans antialiased selection:bg-brand-green selection:text-black overflow-x-hidden">
+
+    <div id="urgency-bar" class="bg-gradient-to-r from-emerald-900 via-emerald-700 to-teal-900 text-white text-xs sm:text-sm font-semibold py-2.5 px-4 text-center sticky top-0 z-50 shadow-lg border-b border-emerald-500/30 flex justify-center items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-400 text-slate-950 animate-pulse">
+            🔥 ÚLTIMAS VAGAS
+        </span>
+        <span>Desconto especial de lançamento expira em: </span>
+        <span id="top-timer" class="font-mono bg-black/40 px-2 py-0.5 rounded text-amber-300 font-bold border border-amber-400/30">14:59</span>
+        <span class="hidden md:inline text-emerald-200">| Restam apenas <span class="text-amber-300 font-extrabold" id="vagas-count">7</span> vagas com bônus VIP</span>
+    </div>
+
+    <header class="relative pt-8 pb-16 md:pt-14 md:pb-24 bg-grid-pattern overflow-hidden">
+        <!-- Radial Gradient Lights -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 blur-[140px] rounded-full pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-[350px] h-[350px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+            
+            <!-- Category Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold mb-6 backdrop-blur-sm">
+                <i class="fa-solid fa-bolt text-amber-400"></i>
+                <span>O MÉTODO MAIS RÁPIDO PARA VALIDAR UMA RENDA DIGITAL EM 2026</span>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight mb-6">
+                Descubra Como Faturar Seus Primeiros <br class="hidden sm:inline">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300 glow-text-green">
+                    R$ 10.000/Mês na Internet
+                </span> 
+                Sem Precisar Aparecer
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed mb-8">
+                Um passo a passo simples, prático e testado por mais de <strong class="text-white font-semibold">14.800 alunos</strong> para criar uma estrutura automatizada de vendas trabalhando de 2 a 3 horas por dia usando apenas o celular ou computador.
+            </p>
+
+            <!-- VSL Mockup Container -->
+            <div class="relative max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-2xl border-2 border-emerald-500/40 bg-slate-900 shadow-emerald-500/20 group">
+                <!-- Video Header status bar -->
+                <div class="bg-slate-950 px-4 py-2 flex items-center justify-between border-b border-slate-800 text-xs text-slate-400">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                        <span class="font-semibold text-slate-200">AULA EXCLUSIVA AO VIVO</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span><i class="fa-solid fa-eye text-emerald-400 mr-1"></i> <span id="live-viewers">1,842</span> assistindo agora</span>
+                    </div>
+                </div>
+
+                <!-- Video Screen -->
+                <div class="relative aspect-video bg-slate-950 flex flex-col items-center justify-center cursor-pointer overflow-hidden" id="vsl-screen">
+                    <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80" alt="Thumbnail da aula" class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-105 transition-transform duration-700">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/40"></div>
+
+                    <!-- Play Overlay Button -->
+                    <button id="play-vsl-btn" class="relative z-20 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center text-2xl sm:text-3xl shadow-xl shadow-emerald-500/50 hover:scale-110 transition-transform duration-300 group-hover:bg-amber-400">
+                        <i class="fa-solid fa-play ml-1"></i>
+                    </button>
+
+                    <p class="relative z-20 mt-4 text-xs sm:text-sm text-slate-200 font-medium bg-black/60 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/10">
+                        🔊 <span id="vsl-status">Clique para LIGAR O SOM e assistir</span>
+                    </p>
+
+                    <!-- Simulated Progress Bar -->
+                    <div class="absolute bottom-0 left-0 right-0 h-1.5 bg-slate-800 z-20">
+                        <div id="vsl-progress" class="h-full bg-gradient-to-r from-emerald-500 to-amber-400 w-1/3 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary High-Converting CTA Button -->
+            <div class="mt-10 max-w-xl mx-auto text-center space-y-4">
+                <a href="#checkout-section" class="block w-full py-5 px-8 rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 hover:from-emerald-400 hover:to-amber-300 text-slate-950 font-extrabold text-xl sm:text-2xl shadow-xl animate-pulse-glow hover:scale-[1.02] transition-all duration-300 uppercase tracking-wide text-center">
+                    <i class="fa-solid fa-bolt mr-2"></i> QUERO ACESSAR O MÉTODO AGORA
+                </a>
+                
+                <div class="flex flex-wrap justify-center items-center gap-4 text-xs sm:text-sm text-slate-400">
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-shield-halved text-emerald-400"></i> Acesso Imediato</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-lock text-emerald-400"></i> Pagamento 100% Seguro</span>
+                    <span class="flex items-center gap-1"><i class="fa-solid fa-rotate-left text-amber-400"></i> 7 Dias de Garantia</span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <section class="py-6 bg-slate-900/80 border-y border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 flex flex-wrap justify-around items-center gap-6 text-center text-slate-400 text-xs sm:text-sm font-semibold">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user-check text-emerald-400 text-lg"></i>
+                <span><strong>+14.800</strong> Alunos Ativos</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-star text-amber-400 text-lg"></i>
+                <span><strong>4.9/5.0</strong> Avaliação Média</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-money-bill-trend-up text-emerald-400 text-lg"></i>
+                <span><strong>+R$ 12 Milhões</strong> Faturados por Alunos</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-certificate text-teal-400 text-lg"></i>
+                <span>Garantia de Devolução Integral</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-brand-dark relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <span class="text-emerald-400 text-xs sm:text-sm font-bold tracking-widest uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">SIMULADOR DE FATURAMENTO</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Quanto Você Pode Ganhar Nos Próximos 30 Dias?</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-2">Ajuste os parâmetros abaixo para calcular o seu potencial de ganhos diários e mensais.</p>
+            </div>
+
+            <!-- Interactive Calculator Box -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    
+                    <!-- Sliders Side -->
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold mb-2">
+                                <label for="hours-slider" class="text-slate-200">Tempo dedicado por dia:</label>
+                                <span id="hours-val" class="text-emerald-400 font-bold">2 Horas</span>
+                            </div>
+                            <input type="range" id="hours-slider" min="1" max="8" value="2" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold mb-2">
+                                <label for="sales-slider" class="text-slate-200">Vendas estimadas por dia:</label>
+                                <span id="sales-val" class="text-emerald-400 font-bold">3 Vendas</span>
+                            </div>
+                            <input type="range" id="sales-slider" min="1" max="20" value="3" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm font-semibold mb-2">
+                                <label for="ticket-slider" class="text-slate-200">Comissão por venda:</label>
+                                <span id="ticket-val" class="text-amber-400 font-bold">R$ 97,00</span>
+                            </div>
+                            <input type="range" id="ticket-slider" min="30" max="300" step="10" value="97" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                        </div>
+                    </div>
+
+                    <!-- Result Card -->
+                    <div class="bg-slate-950 p-6 rounded-xl border border-emerald-500/30 text-center space-y-4 shadow-inner">
+                        <span class="text-xs text-slate-400 font-medium uppercase tracking-wider">ESTIMATIVA DE GANHO MENSAL</span>
+                        <div class="text-3xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-300 glow-text-green" id="projected-income">
+                            R$ 8.730,00
+                        </div>
+                        <div class="text-xs text-slate-400 border-t border-slate-800 pt-3 flex justify-between">
+                            <span>Ganhos Diários: <strong class="text-emerald-400" id="daily-income">R$ 291,00</strong></span>
+                            <span>Projeção Anual: <strong class="text-amber-400" id="yearly-income">R$ 104.760,00</strong></span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 italic">Resultados reais dependem do nível de aplicação do método repassado no treinamento.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-slate-950 border-t border-slate-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white">
+                    Pare de Trocar Seu Tempo Por Pouco Dinheiro
+                </h2>
+                <p class="text-slate-400 mt-3 text-sm sm:text-base">
+                    A maioria das pessoas falha na internet porque tenta inventar a roda sem um método comprovado. Veja a diferença clara:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Traditional / Pain Side -->
+                <div class="bg-red-950/20 border border-red-500/30 rounded-2xl p-6 sm:p-8 space-y-4">
+                    <div class="flex items-center gap-3 border-b border-red-500/20 pb-4">
+                        <div class="w-10 h-10 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-xl">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-red-200 text-lg">SEM O MÉTODO</h3>
+                            <p class="text-xs text-red-400">A rotina frustrante da maioria</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i>
+                            <span>Trabalhar 8h a 10h por dia para receber um salário limitado.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i>
+                            <span>Tentar vender na internet sem estratégia e só gastar dinheiro.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i>
+                            <span>Ter medo de aparecer em vídeos ou passar vergonha nas redes sociais.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i>
+                            <span>Ficar perdido com excesso de conteúdos soltos e desorganizados no YouTube.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Solution / Method Side -->
+                <div class="bg-emerald-950/20 border border-emerald-500/40 rounded-2xl p-6 sm:p-8 space-y-4 shadow-xl shadow-emerald-950/50">
+                    <div class="flex items-center gap-3 border-b border-emerald-500/20 pb-4">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xl">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-emerald-200 text-lg">COM O MÉTODO RENDA DOMINANTE</h3>
+                            <p class="text-xs text-emerald-400">Sua nova realidade financeira</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-sm text-slate-200">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span>Liberdade geográfica: trabalhe de onde quiser apenas com acesso à internet.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span>Vendas no piloto automático rodando 24 horas por dia, 7 dias por semana.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span>Estratégia 100% anônima (você não precisa mostrar seu rosto para lucrar).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1"></i>
+                            <span>Passo a passo simples em videoaulas diretas ao ponto, sem enrolação.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-brand-dark">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center mb-16">
+                <span class="text-amber-400 text-xs sm:text-sm font-bold tracking-widest uppercase bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">CONTEÚDO DO TREINAMENTO</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">O Que Você Vai Aprender Passo a Passo</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-2">Clique nos módulos abaixo para explorar o conteúdo exclusivo que te espera.</p>
+            </div>
+
+            <!-- Accordion List -->
+            <div class="space-y-4" id="modules-accordion">
+                
+                <!-- Module 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden transition-all">
+                    <button class="accordion-header w-full p-5 text-left flex justify-between items-center bg-slate-900 hover:bg-slate-800/80 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-sm">01</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base sm:text-lg">Módulo 1: A Virada de Chave & Estrutura Inicial</h3>
+                                <p class="text-xs text-slate-400">Configurando sua conta lucrativa e definindo nichos de alta conversão</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300 space-y-2">
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Como escolher os produtos ocultos mais lucrativos do mercado.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Configuração da plataforma de recebimento direto na sua conta bancária.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Entendendo a psicologia de vendas de alto impacto.</p>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden transition-all">
+                    <button class="accordion-header w-full p-5 text-left flex justify-between items-center bg-slate-900 hover:bg-slate-800/80 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-sm">02</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base sm:text-lg">Módulo 2: O Robô de Vendas Automáticas</h3>
+                                <p class="text-xs text-slate-400">Criando funis simples que vendem enquanto você dorme</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300 space-y-2">
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Como estruturar um script de conversa que converte 8 em cada 10 leitores.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Automações gratuitas de WhatsApp e Instagram para não precisar ficar digitando.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Geração de links de checkout de alta conversão.</p>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden transition-all">
+                    <button class="accordion-header w-full p-5 text-left flex justify-between items-center bg-slate-900 hover:bg-slate-800/80 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-sm">03</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base sm:text-lg">Módulo 3: Tráfego Orgânico Virazal (R$ 0 de Investimento)</h3>
+                                <p class="text-xs text-slate-400">Como atrair milhares de compradores sem gastar um centavo em anúncios</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300 space-y-2">
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>A técnica secreta de vídeos curtos que ultrapassam 500 mil visualizações.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Templates de Inteligência Artificial para gerar conteúdos sem colocar a voz.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Algoritmo Hack: O horário exato para postar e viralizar ofertas.</p>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden transition-all">
+                    <button class="accordion-header w-full p-5 text-left flex justify-between items-center bg-slate-900 hover:bg-slate-800/80 transition-colors">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-sm">04</div>
+                            <div>
+                                <h3 class="font-bold text-white text-base sm:text-lg">Módulo 4: Escala de 5 Dígitos e Multiplicação</h3>
+                                <p class="text-xs text-slate-400">Saindo dos R$ 2.000 para os R$ 10.000+ por mês de forma previsível</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300 space-y-2">
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Acelerando resultados com micro-anúncios patrocinados de alto retorno.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Como ter múltiplas estruturas vendendo produtos diferentes em paralelo.</p>
+                        <p><i class="fa-solid fa-check text-emerald-400 mr-2"></i>Gestão de ganhos e investimentos para criar patrimônio duradouro.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-slate-950 border-t border-slate-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-emerald-400 text-xs sm:text-sm font-bold tracking-widest uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">BÔNUS EXCLUSIVOS</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Garantindo Sua Vaga Hoje Você Recebe Gratuitamente:</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Bonus 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative flex flex-col justify-between hover:border-amber-500/50 transition-all group">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 text-xs font-bold mb-4">BÔNUS #1</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Comunidade VIP no Telegram</h3>
+                        <p class="text-sm text-slate-400">Networking com alunos avançados, tira-dúvidas diário e compartilhamento de estratégias que estão funcionando agora.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center">
+                        <span class="text-xs text-slate-500 line-through">Valor Normal: R$ 297,00</span>
+                        <span class="text-sm font-bold text-emerald-400">GRÁTIS HOJE</span>
+                    </div>
+                </div>
+
+                <!-- Bonus 2 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative flex flex-col justify-between hover:border-amber-500/50 transition-all group">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 text-xs font-bold mb-4">BÔNUS #2</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Pack de 500+ Prompts de IA</h3>
+                        <p class="text-sm text-slate-400">Comandos prontos do ChatGPT para criar copies, textos de vendas, roteiros de vídeos e e-mails lucrativos em segundos.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center">
+                        <span class="text-xs text-slate-500 line-through">Valor Normal: R$ 197,00</span>
+                        <span class="text-sm font-bold text-emerald-400">GRÁTIS HOJE</span>
+                    </div>
+                </div>
+
+                <!-- Bonus 3 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative flex flex-col justify-between hover:border-amber-500/50 transition-all group">
+                    <div>
+                        <div class="inline-block px-3 py-1 rounded-full bg-amber-400/10 text-amber-400 text-xs font-bold mb-4">BÔNUS #3</div>
+                        <h3 class="text-lg font-bold text-white mb-2">Mentoria Mensal Ao Vivo</h3>
+                        <p class="text-sm text-slate-400">Encontros quinzenais via Zoom para análise de conta, correção de rotas e atendimento presencial com o especialista.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex justify-between items-center">
+                        <span class="text-xs text-slate-500 line-through">Valor Normal: R$ 497,00</span>
+                        <span class="text-sm font-bold text-emerald-400">GRÁTIS HOJE</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-brand-dark">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-emerald-400 text-xs sm:text-sm font-bold tracking-widest uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">PROVA SOCIAL</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Pessoas Comuns Tendo Resultados Reais</h2>
+                <p class="text-slate-400 text-sm sm:text-base mt-2">Veja o que dizem os alunos que aplicaram o Método Renda Dominante:</p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Testimonial 1 -->
+                <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between shadow-lg">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 text-sm gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-slate-300 italic">"Eu trabalhava como motorista de aplicativo 12h por dia. Em apenas 25 dias aplicando o módulo de tráfego orgânico, fiz R$ 4.320,00 limpos no meu bolso sem precisar aparecer!"</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Lucas M." class="w-10 h-10 rounded-full object-cover border border-emerald-400">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Lucas M.</h4>
+                            <p class="text-xs text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Aluno Verificado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between shadow-lg">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 text-sm gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-slate-300 italic">"Achava que isso de ganhar dinheiro na internet era mentira. No segundo mês, meu faturamento ultrapassou meu antigo salário da firma. Vale cada centavo investido!"</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Renata S." class="w-10 h-10 rounded-full object-cover border border-emerald-400">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Renata S.</h4>
+                            <p class="text-xs text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Aluna Verificada</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-slate-900/90 border border-slate-800 p-6 rounded-2xl flex flex-col justify-between shadow-lg">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 text-sm gap-1">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="text-sm text-slate-300 italic">"O suporte é sensacional! Tive uma dúvida na parte de automação de vendas e fui respondido em minutos no grupo VIP. Recomendo demais!"</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-800 flex items-center gap-3">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Guilherme F." class="w-10 h-10 rounded-full object-cover border border-emerald-400">
+                        <div>
+                            <h4 class="font-bold text-white text-sm">Guilherme F.</h4>
+                            <p class="text-xs text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-circle-check"></i> Aluno Verificado</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="checkout-section" class="py-16 md:py-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+            
+            <!-- Box Main Container -->
+            <div class="bg-slate-900 border-2 border-emerald-500 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-emerald-500/20 relative overflow-hidden">
+                
+                <!-- Top Ribbon -->
+                <div class="absolute top-0 right-0 bg-gradient-to-l from-amber-400 to-amber-500 text-slate-950 font-extrabold text-xs uppercase px-8 py-1.5 rounded-bl-xl shadow-md">
+                    70% DE DESCONTO HOJE
+                </div>
+
+                <div class="text-center max-w-xl mx-auto space-y-4">
+                    <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">OFERTA DE LANÇAMENTO EXCLUSIVA</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white">Método Renda Dominante Completo</h2>
+                    <p class="text-slate-300 text-sm">Acesso vitalício ao curso completo + Todos os 3 Bônus VIPs + Atualizações 2026 inclusas.</p>
+
+                    <!-- Price Stack -->
+                    <div class="py-6 border-y border-slate-800 my-6">
+                        <div class="text-slate-400 text-sm line-through mb-1">De R$ 997,00 por apenas:</div>
+                        <div class="text-slate-300 text-sm">12x de</div>
+                        <div class="text-4xl sm:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">
+                            R$ 19,78
+                        </div>
+                        <div class="text-emerald-400 font-bold text-sm mt-1">ou R$ 197,00 à vista no PIX com Desconto Máximo</div>
+                    </div>
+
+                    <!-- Checklist -->
+                    <ul class="text-left space-y-3 text-sm text-slate-200 max-w-md mx-auto mb-8">
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Curso Completo (Módulos 1 ao 4)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Bônus 1: Grupo VIP no Telegram (R$ 297)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Bônus 2: Pack 500+ Prompts Lucrativos (R$ 197)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Bônus 3: Mentorias quinzenais ao vivo (R$ 497)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                            <span>Garantia Incondicional de 7 Dias</span>
+                        </li>
+                    </ul>
+
+                    <!-- CTA Checkout Trigger -->
+                    <button id="open-checkout-btn" class="w-full py-5 px-8 rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-400 to-amber-400 hover:from-emerald-400 hover:to-amber-300 text-slate-950 font-extrabold text-xl sm:text-2xl shadow-2xl animate-pulse-glow transition-all duration-300 uppercase tracking-wider flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>INSCREVER-ME AGORA MESMO</span>
+                    </button>
+
+                    <!-- Payment Icons -->
+                    <div class="pt-4 flex flex-wrap justify-center items-center gap-4 text-xs text-slate-400">
+                        <span class="flex items-center gap-1"><i class="fa-brands fa-pix text-teal-400 text-base"></i> PIX Aprovado na Hora</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-credit-card text-emerald-400 text-base"></i> Cartão em até 12x</span>
+                        <span class="flex items-center gap-1"><i class="fa-solid fa-shield-halved text-amber-400 text-base"></i> Checkout Criptografado</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-16 bg-slate-950 border-t border-slate-900">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-2xl flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                <div class="w-32 h-32 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-amber-400/20 to-emerald-500/20 rounded-full border-2 border-amber-400/50 p-2">
+                    <div class="text-center">
+                        <i class="fa-solid fa-award text-amber-400 text-4xl mb-1"></i>
+                        <div class="text-[10px] font-black text-slate-200 uppercase leading-none">100% Garantido</div>
+                        <div class="text-xs font-bold text-amber-300">7 DIAS</div>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-xl sm:text-2xl font-bold text-white">Risco Zero: Teste por 7 Dias sem Compromisso!</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Tenho tanta confiança na eficácia do Método Renda Dominante que assumo todo o risco. Entre hoje, assista às aulas e aplique os passos. Se você não ficar 100% satisfeito com o conteúdo, basta enviar um e-mail para nossa equipe em até 7 dias e devolveremos <strong class="text-emerald-400">100% do seu dinheiro</strong> sem letras miúdas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 md:py-24 bg-brand-dark">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-amber-400 text-xs font-bold tracking-widest uppercase bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">DÚVIDAS FREQUENTES</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-3">Perguntas Frequentes</h2>
+            </div>
+
+            <div class="space-y-4" id="faq-accordion">
+                
+                <!-- FAQ 1 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-header w-full p-5 text-left flex justify-between items-center font-bold text-slate-100 hover:text-emerald-400 transition-colors">
+                        <span>Preciso ter experiência prévia para conseguir resultados?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300">
+                        Não! O treinamento foi estruturado do zero absoluto, ensinando desde a criação das contas até as estratégias avançadas de vendas. Qualquer pessoa com conhecimentos básicos de celular consegue acompanhar.
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-header w-full p-5 text-left flex justify-between items-center font-bold text-slate-100 hover:text-emerald-400 transition-colors">
+                        <span>Quanto tempo por dia preciso me dedicar?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300">
+                        Apenas de 1 a 2 horas por dia já são suficientes para colocar a estrutura para rodar e obter os primeiros resultados nas primeiras semanas.
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-header w-full p-5 text-left flex justify-between items-center font-bold text-slate-100 hover:text-emerald-400 transition-colors">
+                        <span>Como vou receber o acesso ao treinamento?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300">
+                        Imediatamente após a confirmação do pagamento (PIX ou Cartão), você receberá um e-mail com seus dados de login e senha para acessar nossa área de membros exclusiva.
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <button class="faq-header w-full p-5 text-left flex justify-between items-center font-bold text-slate-100 hover:text-emerald-400 transition-colors">
+                        <span>Preciso aparecer nos vídeos para vender?</span>
+                        <i class="fa-solid fa-chevron-down text-slate-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-body hidden p-5 bg-slate-950 border-t border-slate-800 text-sm text-slate-300">
+                        Absolutamente não! Uma grande parte do nosso treinamento é focada em estratégias 100% anônimas usando perfis de nicho e Inteligência Artificial.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Purchase Notification Popup -->
+    <div id="live-proof-toast" class="fixed bottom-5 left-5 z-40 bg-slate-900/95 border border-emerald-500/40 p-4 rounded-xl shadow-2xl backdrop-blur-md flex items-center gap-3 max-w-xs transform translate-y-32 opacity-0 transition-all duration-500 pointer-events-none">
+        <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold flex-shrink-0">
+            <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+        <div class="text-xs">
+            <p class="text-slate-200 font-semibold" id="toast-name">Carlos A. de SP</p>
+            <p class="text-emerald-400 text-[11px]" id="toast-msg">Acabou de adquirir a vaga VIP com 70% OFF</p>
+            <span class="text-[10px] text-slate-500" id="toast-time">Há 2 minutos</span>
+        </div>
+    </div>
+
+    <!-- Mobile Fixed Bottom CTA Bar -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 p-3 bg-slate-950/90 backdrop-blur-lg border-t border-slate-800 z-40">
+        <a href="#checkout-section" class="block w-full py-3.5 px-4 rounded-lg bg-gradient-to-r from-emerald-500 to-amber-400 text-slate-950 font-extrabold text-center text-sm shadow-lg tracking-wide uppercase">
+            ⚡ QUERO GARANTIR MINHA VAGA (70% OFF)
+        </a>
+    </div>
+
+    <div id="checkout-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg p-6 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button id="close-modal-btn" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Step 1: Form & Payment Choice -->
+            <div id="checkout-step-1">
+                <div class="text-center mb-6">
+                    <span class="text-xs text-emerald-400 font-bold uppercase tracking-wider">CHECKOUT 100% SEGURO</span>
+                    <h3 class="text-xl font-bold text-white mt-1">Finalizar Sua Inscrição</h3>
+                    <p class="text-xs text-slate-400">Preencha seus dados para liberação imediata do acesso</p>
+                </div>
+
+                <form id="simulated-checkout-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Nome Completo</label>
+                        <input type="text" id="cust-name" required placeholder="Digite seu nome" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Seu Melhor E-mail</label>
+                        <input type="email" id="cust-email" required placeholder="Para onde enviaremos o acesso" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Forma de Pagamento</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="border border-emerald-500/50 bg-emerald-500/10 p-3 rounded-lg flex items-center gap-2 cursor-pointer text-xs font-semibold text-emerald-300">
+                                <input type="radio" name="pay-method" value="pix" checked class="accent-emerald-500">
+                                <i class="fa-brands fa-pix text-teal-400 text-base"></i> PIX (Aprovação Instantânea)
+                            </label>
+                            <label class="border border-slate-800 bg-slate-950 p-3 rounded-lg flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-300">
+                                <input type="radio" name="pay-method" value="card" class="accent-emerald-500">
+                                <i class="fa-solid fa-credit-card text-emerald-400 text-base"></i> Cartão de Crédito
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-amber-400 hover:from-emerald-400 hover:to-amber-300 text-slate-950 font-extrabold text-base uppercase tracking-wider shadow-lg">
+                            GERAR PAGAMENTO SEGURO
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 2: PIX QR Code Simulated Screen -->
+            <div id="checkout-step-2" class="hidden text-center space-y-4 py-4">
+                <div class="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl mx-auto">
+                    <i class="fa-brands fa-pix"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">PIX Gerado com Sucesso!</h3>
+                <p class="text-xs text-slate-300">Escaneie o QR Code abaixo ou copie a chave PIX para concluir seu acesso:</p>
+
+                <!-- QR Code Box -->
+                <div class="p-4 bg-white rounded-xl inline-block shadow-inner mx-auto">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=00020126580014BR.GOV.BCB.PIX0136rendadominante-pix-simulado5204000053039865405197.005802BR5920MetodoRendaDominante6009SAO%20PAULO62070503***6304E2B1" alt="QR Code PIX" class="w-40 h-40">
+                </div>
+
+                <!-- Copy Paste Box -->
+                <div class="space-y-2">
+                    <input type="text" readonly value="00020126580014BR.GOV.BCB.PIX0136rendadominante-pix-simulado5204000053039865405197.005802BR5920MetodoRendaDominante6009SAO%20PAULO62070503***6304E2B1" id="pix-key-input" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded text-xs text-slate-400 font-mono text-center">
+                    <button id="copy-pix-btn" class="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-copy"></i> COPIAR CHAVE PIX
+                    </button>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800">
+                    <button id="sim-confirm-payment" class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm">
+                        <i class="fa-solid fa-circle-check mr-1"></i> SIMULAR CONFIRMAÇÃO DE PAGAMENTO
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Success Confirmation Screen -->
+            <div id="checkout-step-3" class="hidden text-center space-y-4 py-8">
+                <div class="w-16 h-16 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center text-3xl mx-auto shadow-lg shadow-emerald-500/40">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold text-white">Parabéns! Vaga Garantida!</h3>
+                <p class="text-sm text-slate-300">
+                    Seu acesso foi liberado. Enviamos as instruções de login para seu e-mail registrado.
+                </p>
+                <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-400 text-left space-y-2">
+                    <p><strong>Produto:</strong> Método Renda Dominante VIP</p>
+                    <p><strong>Status:</strong> Pagamento Confirmado</p>
+                    <p><strong>Acesso:</strong> Liberado na Área de Membros</p>
+                </div>
+                <button id="finish-btn" class="w-full py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm">
+                    ACESSAR ÁREA DE MEMBROS AGORA
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="py-12 bg-slate-950 border-t border-slate-900 text-slate-500 text-xs text-center space-y-4">
+        <div class="max-w-4xl mx-auto px-4 space-y-3">
+            <p class="font-bold text-slate-400">Método Renda Dominante © 2026 - Todos os Direitos Reservados.</p>
+            <p>
+                Este site não faz parte do site do Facebook ou da Meta Inc. Além disso, este site NÃO é endossado pelo Facebook de nenhuma maneira. FACEBOOK é uma marca comercial da META, Inc.
+            </p>
+            <p class="text-[11px] text-slate-600">
+                Aviso Legal: Os resultados podem variar de pessoa para pessoa dependendo da dedicação e aplicação das estratégias apresentadas.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Top Bar Countdown Timer
+            let duration = 14 * 60 + 59;
+            const timerDisplay = document.getElementById('top-timer');
+            setInterval(() => {
+                const minutes = Math.floor(duration / 60);
+                const seconds = duration % 60;
+                timerDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                if (duration > 0) duration--;
+            }, 1000);
+
+            // 2. VSL Video Interactive Mock Player
+            const vslScreen = document.getElementById('vsl-screen');
+            const playVslBtn = document.getElementById('play-vsl-btn');
+            const vslStatus = document.getElementById('vsl-status');
+            const vslProgress = document.getElementById('vsl-progress');
+            let isPlaying = false;
+            let progressVal = 30;
+
+            function toggleVsl() {
+                isPlaying = !isPlaying;
+                if(isPlaying) {
+                    vslStatus.innerText = "AULA EM REPRODUÇÃO - ÁUDIO ATIVADO";
+                    playVslBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                    playVslBtn.classList.remove('animate-bounce-subtle');
+                } else {
+                    vslStatus.innerText = "Clique para LIGAR O SOM e assistir";
+                    playVslBtn.innerHTML = '<i class="fa-solid fa-play ml-1"></i>';
+                }
+            }
+
+            vslScreen.addEventListener('click', toggleVsl);
+
+            setInterval(() => {
+                if(isPlaying && progressVal < 98) {
+                    progressVal += 0.2;
+                    vslProgress.style.width = progressVal + '%';
+                }
+            }, 1000);
+
+            // 3. Dynamic Interactive Income Calculator
+            const hoursSlider = document.getElementById('hours-slider');
+            const salesSlider = document.getElementById('sales-slider');
+            const ticketSlider = document.getElementById('ticket-slider');
+
+            const hoursVal = document.getElementById('hours-val');
+            const salesVal = document.getElementById('sales-val');
+            const ticketVal = document.getElementById('ticket-val');
+
+            const projectedIncome = document.getElementById('projected-income');
+            const dailyIncome = document.getElementById('daily-income');
+            const yearlyIncome = document.getElementById('yearly-income');
+
+            function updateCalculator() {
+                const hours = parseInt(hoursSlider.value);
+                const sales = parseInt(salesSlider.value);
+                const ticket = parseInt(ticketSlider.value);
+
+                hoursVal.innerText = `${hours} Horas`;
+                salesVal.innerText = `${sales} Vendas`;
+                ticketVal.innerText = `R$ ${ticket},00`;
+
+                const daily = sales * ticket;
+                const monthly = daily * 30;
+                const yearly = monthly * 12;
+
+                dailyIncome.innerText = `R$ ${daily.toLocaleString('pt-BR')},00`;
+                projectedIncome.innerText = `R$ ${monthly.toLocaleString('pt-BR')},00`;
+                yearlyIncome.innerText = `R$ ${yearly.toLocaleString('pt-BR')},00`;
+            }
+
+            hoursSlider.addEventListener('input', updateCalculator);
+            salesSlider.addEventListener('input', updateCalculator);
+            ticketSlider.addEventListener('input', updateCalculator);
+
+            // 4. Curriculum Accordion Toggle
+            const moduleHeaders = document.querySelectorAll('.accordion-header');
+            moduleHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const body = header.nextElementSibling;
+                    const icon = header.querySelector('i');
+                    body.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            // 5. FAQ Accordion Toggle
+            const faqHeaders = document.querySelectorAll('.faq-header');
+            faqHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const body = header.nextElementSibling;
+                    const icon = header.querySelector('i');
+                    body.classList.toggle('hidden');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+
+            // 6. Live Social Proof Toast Notifications
+            const toastNames = ['Marcos V.', 'Juliana P.', 'Eduardo K.', 'Patricia R.', 'Felipe S.', 'Camila T.'];
+            const toastCities = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Curitiba', 'Salvador', 'Brasília'];
+            const toast = document.getElementById('live-proof-toast');
+            const toastName = document.getElementById('toast-name');
+
+            function triggerToast() {
+                const randName = toastNames[Math.floor(Math.random() * toastNames.length)];
+                const randCity = toastCities[Math.floor(Math.random() * toastCities.length)];
+                toastName.innerText = `${randName} de ${randCity}`;
+                
+                toast.classList.remove('translate-y-32', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-32', 'opacity-0');
+                }, 4000);
+            }
+
+            setInterval(triggerToast, 12000);
+            setTimeout(triggerToast, 3000);
+
+            // 7. Interactive Checkout Modal Flow
+            const openCheckoutBtn = document.getElementById('open-checkout-btn');
+            const checkoutModal = document.getElementById('checkout-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const step1 = document.getElementById('checkout-step-1');
+            const step2 = document.getElementById('checkout-step-2');
+            const step3 = document.getElementById('checkout-step-3');
+            const simForm = document.getElementById('simulated-checkout-form');
+            const copyPixBtn = document.getElementById('copy-pix-btn');
+            const simConfirmBtn = document.getElementById('sim-confirm-payment');
+            const finishBtn = document.getElementById('finish-btn');
+
+            openCheckoutBtn.addEventListener('click', () => {
+                checkoutModal.classList.remove('hidden');
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                checkoutModal.classList.add('hidden');
+            });
+
+            simForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                step1.classList.add('hidden');
+                step2.classList.remove('hidden');
+            });
+
+            copyPixBtn.addEventListener('click', () => {
+                const pixInput = document.getElementById('pix-key-input');
+                pixInput.select();
+                document.execCommand('copy');
+                copyPixBtn.innerText = '✅ CHAVE COPIADA COM SUCESSO!';
+                setTimeout(() => {
+                    copyPixBtn.innerHTML = '<i class="fa-solid fa-copy"></i> COPIAR CHAVE PIX';
+                }, 2500);
+            });
+
+            simConfirmBtn.addEventListener('click', () => {
+                step2.classList.add('hidden');
+                step3.classList.remove('hidden');
+
+                // Trigger celebration confetti
+                if(typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 120,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+            });
+
+            finishBtn.addEventListener('click', () => {
+                checkoutModal.classList.add('hidden');
+                step3.classList.add('hidden');
+                step1.classList.remove('hidden');
+            });
+
+        });
+    </script>
+</body>
+</html>
